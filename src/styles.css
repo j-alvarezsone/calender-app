@@ -62,5 +62,17 @@ body {
 
 .react-datepicker__close-icon::before,
 .react-datepicker__close-icon::after {
-  background-color: red;
+  background-color: #dc143c;
+}
+
+.react-datepicker__day--selected {
+  background-color: #367cf7;
+}
+
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item--selected {
+  background-color: #367cf7;
 }
