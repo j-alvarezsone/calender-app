@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import DateTimePicker from 'react-datetime-picker';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { customStyles } from '../../helpers/modalCustomStyle';
 import { CustomIcon } from '../ui/CustomIcon';
@@ -41,21 +42,34 @@ export const CalendarModal = () => {
       <form className='container'>
         <div className='form-group'>
           <label>Start date and time</label>
-          <DateTimePicker
+          <br />
+          <DatePicker
             onChange={handleStartDateChange}
-            value={dateStart}
-            amPmAriaLabel='Select AM/PM'
+            selected={dateStart}
+            startDate={dateStart}
+            selectsStart
+            showTimeSelect
+            dateFormat='MMMM d, yyyy h:mm aa'
+            isClearable
+            timeFormat='HH:mm'
+            placeholderText='Choice your start date and time'
             className='form-control'
+            shouldHighlightWeekends
           />
         </div>
 
         <div className='form-group'>
           <label>Date and end time</label>
-          <DateTimePicker
+          <DatePicker
             onChange={handleEndDateChange}
-            value={dateEnd}
+            selected={dateEnd}
             minDate={dateStart}
-            amPmAriaLabel='Select AM/PM'
+            selectsEnd
+            startDate={dateStart}
+            showTimeSelect
+            dateFormat='MMMM d, yyyy h:mm aa'
+            isClearable
+            placeholderText='Choice your end date and time'
             className='form-control'
           />
         </div>

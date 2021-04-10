@@ -14,7 +14,7 @@ body {
   height: 100%;
 }
 
-/* Modal */
+/******************************** Modal ********************************/
 .ReactModalPortal > div {
   opacity: 0;
 }
@@ -55,11 +55,12 @@ body {
   padding: 5px;
 }
 
-/* Datepicker */
-.react-datetime-picker input:focus {
-  outline: none;
+/******************************** Datepicker ********************************/
+.react-datepicker-wrapper {
+  width: 100%;
 }
 
-.react-datetime-picker__wrapper {
-  border: 0px solid gray !important;
+.react-datepicker__close-icon::before,
+.react-datepicker__close-icon::after {
+  background-color: red;
 }
