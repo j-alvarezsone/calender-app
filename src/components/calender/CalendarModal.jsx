@@ -9,6 +9,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from 'react-redux';
+import { uiCloseModal } from '../../redux/actions/ui';
 
 Modal.setAppElement('#root');
 const now = moment().minutes(0).seconds(0).add(0, 'hours');
@@ -24,6 +26,9 @@ export const CalendarModal = () => {
     end: nowPlus1.toDate(),
   });
 
+  const { modalOpen } = useSelector((state) => state.ui);
+  const dispatch = useDispatch();
+
   const { title, notes, start, end } = formValues;
 
   const handleInputChange = ({ target }) => {
@@ -33,11 +38,12 @@ export const CalendarModal = () => {
     });
   };
 
+  // Modal
   const closeModal = () => {
-    //TODO cerrar el modal
-    console.log('Closing...');
+    dispatch(uiCloseModal());
   };
 
+  // DatePicker
   const handleStartDateChange = (e) => {
     setDateStart(e);
     setFormValues({
@@ -74,7 +80,7 @@ export const CalendarModal = () => {
 
   return (
     <Modal
-      isOpen={true}
+      isOpen={modalOpen}
       // onAfterOpen={afterOpenModal}
       onRequestClose={closeModal}
       style={customStyles}
