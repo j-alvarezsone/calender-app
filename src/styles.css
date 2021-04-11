@@ -8,6 +8,7 @@ body {
   display: flex;
   flex-flow: column;
   height: 100vh;
+  overflow-y: auto;
 }
 
 .rbc-calender {
@@ -75,4 +76,15 @@ body {
   ul.react-datepicker__time-list
   li.react-datepicker__time-list-item--selected {
   background-color: #367cf7;
+}
+
+/******************************** FABS ********************************/
+.fab {
+  border-radius: 100%;
+  bottom: 25px;
+  font-size: 30px;
+  padding: 25px;
+  position: fixed;
+  right: 25px;
+  z-index: 999;
 }
