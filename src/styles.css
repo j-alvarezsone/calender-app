@@ -88,3 +88,11 @@ body {
   right: 25px;
   z-index: 999;
 }
+
+.fab-danger {
+  bottom: 25px;
+  padding: 10px;
+  position: fixed;
+  left: 25px;
+  z-index: 999;
+}
