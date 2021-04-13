@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { customStyles } from '../../helpers/modalCustomStyle';
 import { CustomIcon } from '../ui/CustomIcon';
@@ -10,26 +10,36 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
-import { uiCloseModal } from '../../redux/actions/ui';
+import { uiCloseModal } from '../../redux/actions/ui/ui';
+import { eventAddNew, eventClearActiveEvent } from '../../redux/actions/calender/events';
 
 Modal.setAppElement('#root');
 const now = moment().minutes(0).seconds(0).add(0, 'hours');
 const nowPlus1 = now.clone().add(1, 'hours');
+
+const initEvent = {
+  title: '',
+  notes: '',
+  start: now.toDate(),
+  end: nowPlus1.toDate(),
+};
 export const CalendarModal = () => {
   const [dateStart, setDateStart] = useState(now.toDate());
   const [dateEnd, setDateEnd] = useState(nowPlus1.toDate());
   const [titleValid, setTitleValid] = useState(true);
-  const [formValues, setFormValues] = useState({
-    title: 'Event',
-    notes: '',
-    start: now.toDate(),
-    end: nowPlus1.toDate(),
-  });
+  const [formValues, setFormValues] = useState(initEvent);
 
   const { modalOpen } = useSelector((state) => state.ui);
+  const { activeEvent } = useSelector((state) => state.calender);
   const dispatch = useDispatch();
 
   const { title, notes, start, end } = formValues;
+
+  useEffect(() => {
+    if (activeEvent) {
+      setFormValues(activeEvent);
+    }
+  }, [activeEvent, setFormValues]);
 
   const handleInputChange = ({ target }) => {
     setFormValues({
@@ -41,6 +51,8 @@ export const CalendarModal = () => {
   // Modal
   const closeModal = () => {
     dispatch(uiCloseModal());
+    dispatch(eventClearActiveEvent());
+    setFormValues(initEvent);
   };
 
   // DatePicker
@@ -74,6 +86,17 @@ export const CalendarModal = () => {
     }
 
     // TODO realizar grabación
+    dispatch(
+      eventAddNew({
+        ...formValues,
+        id: new Date().getTime(),
+        user: {
+          _id: '123',
+          name: 'jorge',
+        },
+      }),
+    );
+
     setTitleValid(true);
     closeModal();
   };
@@ -96,17 +119,16 @@ export const CalendarModal = () => {
           <br />
           <DatePicker
             onChange={handleStartDateChange}
-            selected={dateStart}
+            selected={start}
             startDate={dateStart}
             selectsStart
+            isClearable
             showTimeSelect
             dateFormat='MMMM d, yyyy h:mm aa'
-            isClearable
             timeFormat='HH:mm'
             placeholderText='Choice your start date and time'
+            maxDate={dateEnd}
             className='form-control'
-            shouldHighlightWeekends
-            maxDate={end}
           />
         </div>
 
@@ -114,10 +136,10 @@ export const CalendarModal = () => {
           <label>Date and end time</label>
           <DatePicker
             onChange={handleEndDateChange}
-            selected={dateEnd}
+            selected={end}
             minDate={dateStart}
             selectsEnd
-            startDate={dateStart}
+            startDate={start}
             showTimeSelect
             dateFormat='MMMM d, yyyy h:mm aa'
             isClearable
