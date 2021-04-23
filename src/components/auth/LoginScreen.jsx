@@ -1,22 +1,40 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 import { useForm } from '../../hooks/useForm';
-import { startLogin } from '../../redux/actions/auth/auth';
+import { startLogin, startRegister } from '../../redux/actions/auth/auth';
 import './login.css';
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();
+
   const [formLoginValues, handleLoginInputChange] = useForm({
     lEmail: 'jorge@gmail.com',
     lPassword: '123456',
   });
 
+  const [formRegisterValues, handleRegisterInputChange] = useForm({
+    rName: 'Akira',
+    rEmail: 'akira@gmail.com',
+    rPassword: '123456',
+    rPassword2: '123456',
+  });
+
   const { lEmail, lPassword } = formLoginValues;
+  const { rName, rEmail, rPassword, rPassword2 } = formRegisterValues;
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(formLoginValues);
     dispatch(startLogin(lEmail, lPassword));
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    if (rPassword !== rPassword2) {
+      return Swal.fire('Error', 'The password must be the same', 'error');
+    }
+    dispatch(startRegister(rEmail, rPassword, rName));
   };
 
   return (
@@ -53,19 +71,47 @@ export const LoginScreen = () => {
 
         <div className='col-md-6 login-form-2'>
           <h3>Register</h3>
-          <form>
+          <form onSubmit={handleRegister}>
             <div className='form-group'>
-              <input type='text' className='form-control' placeholder='Name' />
+              <input
+                type='text'
+                className='form-control'
+                placeholder='Name'
+                name='rName'
+                value={rName}
+                onChange={handleRegisterInputChange}
+              />
             </div>
             <div className='form-group'>
-              <input type='email' className='form-control' placeholder='Email' />
+              <input
+                type='email'
+                className='form-control'
+                placeholder='Email'
+                name='rEmail'
+                value={rEmail}
+                onChange={handleRegisterInputChange}
+              />
             </div>
             <div className='form-group'>
-              <input type='password' className='form-control' placeholder='Password' />
+              <input
+                type='password'
+                className='form-control'
+                placeholder='Password'
+                name='rPassword'
+                value={rPassword}
+                onChange={handleRegisterInputChange}
+              />
             </div>
 
             <div className='form-group'>
-              <input type='password' className='form-control' placeholder='Confirm password' />
+              <input
+                type='password'
+                className='form-control'
+                placeholder='Confirm password'
+                name='rPassword2'
+                value={rPassword2}
+                onChange={handleRegisterInputChange}
+              />
             </div>
 
             <div className='form-group'>
