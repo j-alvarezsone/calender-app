@@ -1,5 +1,5 @@
 .login-container {
-  margin-top: 11%;
+  margin-top: 13%;
 }
 
 .login-form-1 {
@@ -57,8 +57,4 @@
   color: #0062cc;
   font-weight: 600;
   text-decoration: none;
-}
-
-.main {
-  overflow: hidden;
 }

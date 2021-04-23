@@ -20,7 +20,7 @@ export const AppRouter = () => {
 
   return (
     <Router>
-      <div className='main'>
+      <div>
         <Switch>
           <PublicRoute exact path='/login' component={LoginScreen} isAuthenticated={!!uid} />
           <PrivateRoute exact path='/' component={CalenderScreen} isAuthenticated={!!uid} />
