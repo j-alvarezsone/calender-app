@@ -45,6 +45,12 @@ export const startRegister = (email, password, name) => {
 
 export const startChecking = () => {
   return async (dispatch) => {
+    const isCurrentToken = !!(localStorage.getItem('token') || '');
+    if (!isCurrentToken) {
+      dispatch(checkingFinish());
+      return;
+    }
+
     const resp = await fetchWithToken('auth/renew');
     const body = await resp.json();
 
