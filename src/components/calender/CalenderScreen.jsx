@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from '../ui/Navbar';
 
 import moment from 'moment';
@@ -10,7 +10,11 @@ import { CalenderEvent } from './CalenderEvent';
 import { CalendarModal } from './CalendarModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiOpenModal } from '../../redux/actions/ui/ui';
-import { eventClearActiveEvent, eventSetActive } from '../../redux/actions/calender/events';
+import {
+  eventClearActiveEvent,
+  eventSetActive,
+  eventStartLoading,
+} from '../../redux/actions/calender/events';
 import { AddNewFab } from '../ui/AddNewFab';
 import { DeleteEventFab } from '../ui/DeleteEventFab';
 
@@ -21,6 +25,10 @@ export const CalenderScreen = () => {
 
   const dispatch = useDispatch();
   const { events, activeEvent } = useSelector((state) => state.calender);
+
+  useEffect(() => {
+    dispatch(eventStartLoading());
+  }, [dispatch]);
 
   const onDoubleClick = () => {
     dispatch(uiOpenModal());
