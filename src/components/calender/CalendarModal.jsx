@@ -11,7 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../redux/actions/ui/ui';
-import { eventAddNew, eventClearActiveEvent, eventUpdated } from '../../redux/actions/calender/events';
+import { eventClearActiveEvent, eventUpdated, startAddNew } from '../../redux/actions/calender/events';
 
 Modal.setAppElement('#root');
 const now = moment().minutes(0).seconds(0).add(0, 'hours');
@@ -90,16 +90,7 @@ export const CalendarModal = () => {
     if (activeEvent) {
       dispatch(eventUpdated(formValues));
     } else {
-      dispatch(
-        eventAddNew({
-          ...formValues,
-          id: new Date().getTime(),
-          user: {
-            _id: '123',
-            name: 'jorge',
-          },
-        }),
-      );
+      dispatch(startAddNew(formValues));
     }
 
     setTitleValid(true);
