@@ -5,7 +5,7 @@ import { CalenderScreen } from '../components/calender/CalenderScreen';
 export const AppRouter = () => {
   return (
     <Router>
-      <div>
+      <div className='main'>
         <Switch>
           <Route exact path='/login' component={LoginScreen} />
           <Route exact path='/' component={CalenderScreen} />
