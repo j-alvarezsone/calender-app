@@ -57,7 +57,7 @@ export const LoginScreen = () => {
               <input
                 type='password'
                 className='form-control'
-                placeholder='Contraseña'
+                placeholder='Password'
                 name='lPassword'
                 value={lPassword}
                 onChange={handleLoginInputChange}
